@@ -2654,9 +2654,10 @@ free_line_header (struct backtrace_state *state, struct line_header *hdr,
   if (hdr->dirs_count != 0)
     backtrace_free (state, hdr->dirs, hdr->dirs_count * sizeof (const char *),
 		    error_callback, data);
-  backtrace_free (state, hdr->filenames,
-		  hdr->filenames_count * sizeof (char *),
-		  error_callback, data);
+  if (hdr->filenames != 0)
+    backtrace_free (state, hdr->filenames,
+        hdr->filenames_count * sizeof (char *),
+        error_callback, data);
 }
 
 /* Read the directories and file names for a line header for version
